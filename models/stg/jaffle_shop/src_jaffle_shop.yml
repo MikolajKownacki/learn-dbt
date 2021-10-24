@@ -1,0 +1,9 @@
+version: 2 
+
+sources:
+  - name: dbt_test
+    database: dbt_playground
+    tables:
+      - name: jaffle_shop_customers
+      - name: jaffle_shop_orders
+      - name: stripe_payment

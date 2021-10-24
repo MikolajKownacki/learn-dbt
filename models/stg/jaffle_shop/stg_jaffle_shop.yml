@@ -2,20 +2,23 @@ version: 2
 
 models: 
   - name: stg_customers
+    description: List of customers
     columns:
       - name: customer_id
+        description: Unique customer ID
         tests:
           - unique
           - not_null
-  - name: stg_ordes
+  - name: stg_orders
+    description: List of orders
     columns: 
       - name: status
+        description: "{{ doc('order_status') }}"
         tests:
-          - unique
-          - not_null
-          - completed
-          - returned
-          - placed
-          - return_pending
           - accepted_values:
-              values: ['returned','completed','shipped','placed']
+              values: ['returned','completed','shipped','placed','return_pending']
+      - name: customer_id
+        test:
+          - relationships:
+            to: ref('stg_customers')
+            field: customer_id
