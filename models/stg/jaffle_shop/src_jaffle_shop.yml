@@ -1,0 +1,28 @@
+version: 2 
+
+sources:
+  - name: dbt_test
+    description: A database
+    database: dbt_playground
+    tables:
+      - name: jaffle_shop_customers
+        description: Raw customers data
+        columns:
+            - name: id
+              description: Primary key for customers
+              tests:
+                - uniqe
+                - not_null
+
+      - name: jaffle_shop_orders
+        loaded_at_field: _etl_loaded_at
+        freshness:
+          warn_after: {count: 12, period: hour}
+          error_after: {count: 24, period: hour}
+        columns:
+            - name: id
+              description: Primary key for orders
+              tests:
+                - unique
+                - not_null
+      - name: stripe_payment
